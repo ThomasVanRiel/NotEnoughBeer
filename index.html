@@ -6,23 +6,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Not Enough Beer</title>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Source+Serif+Pro:wght@300&display=swap" rel="stylesheet"> 
+        
         <link rel="stylesheet" href="style.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     </head>
     <body>
         <div id="header">
             <h1>Not Enough Beer</h1>
+            <h2>Select a beer and hover to see how much you have left.</h2>
         </div>
         <div id="content">
-            <div id="menu">
-                <ul>
-                    <li><button onClick="changeGlass('duvel');">Duvel</button></li>
-                    <li><button onClick="changeGlass('tripel karmeliet');">Tripel Karmeliet</button></li>
-                </ul>
-            </div>
-            <div id="chart">
-                <canvas id="myChart" width="800" height="400"></canvas>
+            <div id="chart" class="chartContainer">
+                <canvas id="myChart" width="160" height="200"></canvas>
                 <h2 id="volume">330 ml (100%)</h2>
+            </div>
+            <div id="menu">
+                <button onClick="changeGlass('duvel');">Duvel</button>
+                <button onClick="changeGlass('tripel karmeliet');">Tripel Karmeliet</button>
             </div>
         </div>
         <script src="script.js"></script>
