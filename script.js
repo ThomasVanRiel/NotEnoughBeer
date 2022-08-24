@@ -2,31 +2,30 @@ const ctx = document.getElementById('myChart').getContext('2d');
 
 
 
-fill = data.default.fill;
-selection = 'default';
+fill = data.godis.fill;
+selection = 'godis';
 const elemVolume = document.querySelector('#volume');
 const elemMenu = document.querySelector('#menu');
 const elemHeader = document.getElementById('header');
 
-const labels = data[selection].h;
 const dataInit = {
     labels: labels,
     datasets: [{
         label: 'Outline',
-        data: data[selection].r,
+        data: data[selection].o,
         borderColor: 'black',
         tension: 0.2,
         fill: false
     },{
         label: 'Outline-',
-        data: data[selection].r.map(function(e){return e*-1}),
+        data: data[selection].o.map(function(e){return e*-1}),
         borderColor: 'black',
         tension: 0.2,
         fill: false
     },{
         label: 'Fill',
-        data:  data[selection].r.map(function(e,i){
-            if (data[selection].h[i] <= fill){
+        data:  data[selection].i.map(function(e,i){
+            if (labels[i] <= fill){
                 return e;
             }
             else{
@@ -36,11 +35,11 @@ const dataInit = {
         backgroundColor: data[selection].color,
         showLine: false,
         tension: 0.1,
-        fill: {value: 0}
+        fill: {value: -1}
     },{
         label: 'Fill-',
-        data:  data[selection].r.map(function(e,i){
-            if (data[selection].h[i] <= fill){
+        data:  data[selection].i.map(function(e,i){
+            if (labels[i] <= fill){
                 return -e;
             }
             else {
@@ -50,7 +49,7 @@ const dataInit = {
         backgroundColor: data[selection].color,
         showLine: false,
         tension: 0.1,
-        fill: {value: 0}
+        fill: {value: 1}
     }]
 };
 
@@ -62,7 +61,7 @@ const config = {
         indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: true,
-        aspectRatio: 20/12,
+        aspectRatio: 16/25,
         interaction: {
             mode: 'y'
         },
@@ -81,7 +80,7 @@ const config = {
                 display: false,
                 reverse: true,
                 min: 0,
-                max: 200
+                max: 250
             }
 
         },
@@ -96,28 +95,32 @@ const config = {
             // Substitute the appropriate scale IDs
             const dataY = myChart.scales.y.getValueForPixel(canvasPosition.y);
 
-            volume = data[selection].v[dataY]
-            volpct = volume/data[selection].fill*100
-            elemVolume.innerHTML = volume.toFixed(0) + " ml left (" + volpct.toFixed(0) + "%)"
-            fill = dataY;
+            volume = data[selection].v[dataY];
+            if (!isNaN(volume)) {
+                volmax = data[selection].v[data[selection].fill];
+                console.log(volmax);
+                volpct = volume/volmax*100
+                elemVolume.innerHTML = volume.toFixed(0) + " ml left (" + volpct.toFixed(0) + "%)"
+                fill = dataY;
 
-            // update fill
-            myChart.data.datasets[2].data = data[selection].r.map(function(e,i){
-                if (data[selection].h[i] <= fill){
-                    return e;
-                }
-                else {
-                    return NaN;
-                }
-            });
-            myChart.data.datasets[3].data = data[selection].r.map(function(e,i){
-                if (data[selection].h[i] <= fill){
-                    return -e;
-                }
-                else {
-                    return NaN;
-                }
-            });
+                // update fill
+                myChart.data.datasets[2].data = data[selection].i.map(function(e,i){
+                    if (labels[i] <= fill){
+                        return e;
+                    }
+                    else {
+                        return NaN;
+                    }
+                });
+                myChart.data.datasets[3].data = data[selection].i.map(function(e,i){
+                    if (labels[i] <= fill){
+                        return -e;
+                    }
+                    else {
+                        return NaN;
+                    }
+                });
+            }
 
             myChart.update('none');
         }   
@@ -129,20 +132,20 @@ const myChart = new Chart(ctx, config);
 function reloadData(){
     myChart.data.datasets = [{
         label: 'Outline',
-        data: data[selection].r,
+        data: data[selection].o,
         borderColor: 'black',
         tension: 0.2,
         fill: false
     },{
         label: 'Outline-',
-        data: data[selection].r.map(function(e){return e*-1}),
+        data: data[selection].o.map(function(e){return e*-1}),
         borderColor: 'black',
         tension: 0.2,
         fill: false
     },{
         label: 'Fill',
-        data:  data[selection].r.map(function(e,i){
-            if (data[selection].h[i] <= fill){
+        data:  data[selection].i.map(function(e,i){
+            if (labels[i] <= fill){
                 return e;
             }
             else{
@@ -155,8 +158,8 @@ function reloadData(){
         fill: {value: 0}
     },{
         label: 'Fill-',
-        data:  data[selection].r.map(function(e,i){
-            if (data[selection].h[i] <= fill){
+        data:  data[selection].i.map(function(e,i){
+            if (labels[i] <= fill){
                 return -e;
             }
             else {

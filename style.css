@@ -67,18 +67,18 @@ body {
 
 #chart {
     text-align: center;
-    padding-top: 0;
-}
-
-
-.chartContainer {
     position: relative;
-    height: 60vh;
-    max-height: 80vh;
+    height: 100%;
     margin: 1em;
     padding: 1em;
 }
 
+.chartContainer {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 0 20% 0 20%;
+}
 
 #chart>h2{
     text-align: center;
