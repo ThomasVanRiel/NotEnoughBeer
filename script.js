@@ -28,7 +28,8 @@ const data = {
            308., 312., 316., 320., 324., 328., 332., 336., 340., 344., 348.,
            352., 356., 360., 364., 368., 372., 376., 380., 384., 388., 392.,
            396., 400. ],
-        fill: [80]
+        fill: [80],
+        color: "#D6ECEB"
     }
 }
 
@@ -36,46 +37,46 @@ fill = data.default.fill
 selection = 'default'
 const elemVolume = document.querySelector('#volume')
 
-const labels = data.default.h;
+const labels = data[selection].h;
 const dataInit = {
     labels: labels,
     datasets: [{
         label: 'Outline',
-        data: data.default.r,
+        data: data[selection].r,
         borderColor: 'black',
         tension: 0.2,
         fill: false
     },{
         label: 'Outline-',
-        data: data.default.r.map(function(e){return e*-1}),
+        data: data[selection].r.map(function(e){return e*-1}),
         borderColor: 'black',
         tension: 0.2,
         fill: false
     },{
         label: 'Fill',
-        data:  data.default.r.map(function(e,i){
-            if (data.default.h[i] <= fill){
+        data:  data[selection].r.map(function(e,i){
+            if (data[selection].h[i] <= fill){
                 return e;
             }
             else{
                 return NaN;
             }
         }),
-        borderColor: 'black',
+        backgroundColor: data[selection].color,
         showLine: false,
         tension: 0.1,
         fill: {value: 0}
     },{
         label: 'Fill-',
-        data:  data.default.r.map(function(e,i){
-            if (data.default.h[i] <= fill){
+        data:  data[selection].r.map(function(e,i){
+            if (data[selection].h[i] <= fill){
                 return -e;
             }
             else {
                 return NaN;
             }
         }),
-        borderColor: 'black',
+        backgroundColor: data[selection].color,
         showLine: false,
         tension: 0.1,
         fill: {value: 0}
