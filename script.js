@@ -57,11 +57,10 @@ const config = {
     type: 'line',
     data: dataInit,
     options: {
-        layout:{autoPadding: false},
+        layout:{autoPadding: true},
         indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: true,
-        aspectRatio: 16/25,
         interaction: {
             mode: 'y'
         },

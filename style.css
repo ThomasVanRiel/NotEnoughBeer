@@ -1,4 +1,4 @@
-div {box-sizing: border-box;}
+* {box-sizing: border-box !important;}
 
 
 body {
@@ -74,10 +74,19 @@ body {
 }
 
 .chartContainer {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    height: 100%;
+    padding: 0;
+}
+
+.chartContainer canvas {
     display: block;
     position: relative;
-    width: 100%;
-    padding: 0 20% 0 20%;
+    max-height: 100%;
+    margin: 0;
+    bottom: 0;
 }
 
 #chart>h2{
